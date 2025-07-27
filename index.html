@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>フォーム送信</title>
+</head>
+<body>
+    <h1>記事投稿フォーム</h1>
+    <form action="/submit" method="POST">
+        <div>
+            <label for="title">タイトル:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <br>
+        <div>
+            <label for="author">著者:</label>
+            <input type="text" id="author" name="author" required>
+        </div>
+        <br>
+        <div>
+            <input type="submit" value="送信">
+        </div>
+    </form>
+</body>
+</html>
