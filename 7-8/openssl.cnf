@@ -1,0 +1,51 @@
+[ req ]
+default_bits               = 2048
+default_md                 = sha256
+default_keyfile            = privkey.pem
+distinguished_name         = req_distinguished_name
+attributes                 = req_attributes
+
+[ req_distinguished_name ]
+commonName                 = Common Name
+
+countryName                = CountryName (2 letter code)
+countryName_default        = JP
+countryName_min            = 2
+countryName_max            = 2
+
+stateOrProvinceName        = State or Province Name
+stateOrProvinceName_default = Tokyo
+
+localityName               = Locality Name
+localityName_default       = Minato
+
+organizationName           = Organization Name
+organizationName_default   = example.com
+
+emailAddress               = Email Address
+emailAddress_default       = webmaster@example.com
+emailAddress_max           = 64
+
+[ req_attributes ]
+challengePassword          = A challenge password
+challengePassword_min      = 4
+challengePassword_max      = 20
+
+[CA]
+basicConstraints           = critical,CA:TRUE,pathlen:0
+keyUsage                   = digitalSignature,keyCertSign,cRLSign
+
+[Server]
+basicConstraints           = CA:FALSE
+keyUsage                   = digitalSignature,dataEncipherment
+extendedKeyUsage           = serverAuth
+subjectAltName             = @alt_names
+
+[Client]
+basicConstraints           = CA:FALSE
+keyUsage                   = digitalSignature,dataEncipherment
+extendedKeyUsage           = clientAuth
+
+[alt_names]
+DNS.1                      = localhost
+IP.1                       = 127.0.0.1

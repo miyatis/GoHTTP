@@ -11,14 +11,15 @@ import (
 
 func main() {
 	// 証明書を読み込む
-	cert, err := os.ReadFile("../ca.crt")
+	cert, err := os.ReadFile("ca.crt")
 	if err != nil {
 		panic(err)
 	}
 	certPool := x509.NewCertPool()
 	certPool.AppendCertsFromPEM(cert)
 	tlsConfig := &tls.Config{
-		RootCAs: certPool,
+		RootCAs:            certPool,
+		InsecureSkipVerify: true,
 	}
 	tlsConfig.BuildNameToCertificate()
 
@@ -34,7 +35,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
 	defer resp.Body.Close()
 	dump, err := httputil.DumpResponse(resp, true)
 	if err != nil {
