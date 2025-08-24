@@ -1,16 +1,17 @@
 package main
 
-import (
+import(
   "crypto/tls"
 	"crypto/x509"
+	"bufio"
+	"bytes"
+	"io"
 	"log"
 	"net/http"
-	"net/http/httputil"
 	"os"
 )
 
-// 実行方法: 7-8/ディレクトリで$go run client/client.go
-func main() {
+func main(){
 	// 証明書を読み込む
 	cert, err := os.ReadFile("ca.crt")
 	if err != nil {
@@ -34,12 +35,17 @@ func main() {
 	// 通信を行う
 	resp, err := client.Get("https://localhost:18443/chunked")
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	defer resp.Body.Close()
-	dump, err := httputil.DumpResponse(resp, true)
-	if err != nil {
-		panic(err)
+	reader := bufio.NewReader(resp.Body)
+	for {
+		line, err := reader.ReadBytes('\n')
+		if err == io.EOF {
+			break
+		}
+		log.Println(string(bytes.TrimSpace(line)))
 	}
-	log.Println(string(dump))
 }
+
+
