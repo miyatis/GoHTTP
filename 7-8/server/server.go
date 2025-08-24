@@ -22,6 +22,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 // レスポンスをチャンクで返すハンドラ
 func handleChunkResponce(w http.ResponseWriter, r *http.Request) {
 	c := http.NewResponseController(w)
+
 	for i := 0; i < 10; i++ {
 		fmt.Fprintf(w, "Chunk %d\n", i)
 		c.Flush()
